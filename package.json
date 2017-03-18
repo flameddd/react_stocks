@@ -1,0 +1,51 @@
+{
+  "name": "react_trader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "feed.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "buildCli": "webpack-dev-server --config ./webpack.config_Cli.js --progress --hot --inline"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.3.2",
+    "babel-plugin-react-transform": "^2.0.2",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-preset-react": "^6.23.0",
+    "css-loader": "^0.26.2",
+    "file-loader": "^0.10.1",
+    "json-loader": "^0.5.4",
+    "style-loader": "^0.13.2",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1"
+  },
+  "dependencies": {
+    "co": "^4.6.0",
+    "csv-write-stream": "^2.0.0",
+    "d3": "^4.7.1",
+    "express": "^4.15.0",
+    "file-loader": "^0.10.1",
+    "font-awesome": "^4.7.0",
+    "font-awesome-webpack": "0.0.5-beta.2",
+    "google-stocks": "^1.0.1",
+    "jquery": "^3.1.1",
+    "less": "^2.7.2",
+    "less-loader": "^3.0.0",
+    "moment": "^2.17.1",
+    "moment-timezone": "^0.5.11",
+    "node-sass": "^4.5.0",
+    "node-tsv-json": "^0.2.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-select": "^1.0.0-rc.3",
+    "react-stockcharts": "^0.6.1",
+    "sass-loader": "^6.0.3",
+    "scss-loader": "0.0.1",
+    "serve-favicon": "^2.4.1",
+    "socket.io": "^1.7.3",
+    "url-loader": "^0.5.8"
+  }
+}
