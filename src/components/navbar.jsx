@@ -42,7 +42,7 @@ class navbar extends Component {
                <nav className="navbar navbar-default navbar-fixed-top">
                     <div className="navbar-header">
                         <a className="navbar-brand" href="" >美股觀察</a>
-                        <a className="navbar-brand" href="" >Github</a>
+                        <a className="navbar-brand" href="https://github.com/flameddd/react_stocks" >Github</a>
                         <span className="navbar-brand" >美股狀態：{marketstate}</span>
                     </div>
             </nav> 

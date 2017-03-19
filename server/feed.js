@@ -77,8 +77,18 @@ function simulateChange(){
 
 function init(onChange, initsymbols){
     onChangeHandler = onChange;
-    //symbols = initsymbols.split(",");
-    symbols = Array.from(initsymbols);
+    if (typeof(initsymbols) === 'string') {
+        if(symbols.indexOf(initsymbols) === -1 ){
+            symbols.push(initsymbols);
+        }
+    } else {
+        initsymbols.forEach(function(data){
+            if(symbols.indexOf(data) === -1 ){
+                symbols.push(data);
+            }
+        })
+    }
+
     simulateChange();
 }
 
