@@ -2,7 +2,7 @@
 
 用 `Node.js`、`React` 建立一個看股票的應用，相關技術與資源：`Node.js(express)`、`React`、`socket.io`、`Webpack`、`bootstrap`、`font-awesome`、`react-stockcharts(D3.js)`、`google-finance`、`google-stocks`、`react-select`，並且參考了 Christophe Coenraets 的作品的畫面設計[react-trader](https://github.com/ccoenraets/react-trader)
 
-## [demo](http://35.163.223.176/)
+## [demo](http://35.163.223.176/) <--
 
  ## 畫面截圖
 <p align="center">
