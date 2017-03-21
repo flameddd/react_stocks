@@ -9,9 +9,9 @@ class navbar extends Component {
         //當地交易時間(美東時間) 星期一至星期五	09:30AM - 04:00PM
   
         this.state = {
-            timezone: timezone().locale("zh_TW").tz("America/New_York").format('llll'),
-            upperTime: timezone().locale("zh_TW").tz("America/New_York").set({'hour': 9 , 'minute': 30}).format('llll'),
-            lowerTime: timezone().locale("zh_TW").tz("America/New_York").set({'hour': 16}).format('llll'),
+            timezone: timezone().tz("America/New_York"),
+            upperTime: timezone().tz("America/New_York").set({'hour': 9 , 'minute': 30}),
+            lowerTime: timezone().tz("America/New_York").set({'hour': 16}),
 
         };
         this.tick = this.tick.bind(this);
@@ -22,9 +22,8 @@ class navbar extends Component {
     }
     
     tick(){
-        let ameDate = timezone().locale("zh_TW").tz("America/New_York").format('llll');
+        let ameDate = timezone().tz("America/New_York");
         this.setState({timezone: ameDate})
-       
     }
 
     render() {
@@ -43,7 +42,9 @@ class navbar extends Component {
                     <div className="navbar-header">
                         <a className="navbar-brand" href="" >美股觀察</a>
                         <a className="navbar-brand" href="https://github.com/flameddd/react_stocks" >Github</a>
-                        <span className="navbar-brand" >美股狀態：{marketstate}</span>
+                        <span className="navbar-brand" >美股狀態：{marketstate} 
+                        </span>
+                   
                     </div>
             </nav> 
             </div>

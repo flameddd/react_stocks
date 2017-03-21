@@ -39,57 +39,71 @@ var googleStocks = require('google-stocks');
 "ccol" : "chr" , 
 "pcls_fix" : "831.33" } ]*/
 
-
+var symbols = new Object();
 var stocks = [];
-var symbols = [];
-
-
-function simulateChange(){
-
-    let getDataPro = new Promise((resolve, reject) => {googleStocks(symbols, function(err, data){
-        if (err) {
-            console.log(err);
-            reject("failed");
-        } else {
-            stocks = [];
-
-            data.forEach(function(stock){
-                stocks.push({
-                    symbol: stock.e + ":" + stock.t,
-                    open : parseFloat( stock.l ),
-                    last : parseFloat( stock.l ),
-                    change : parseFloat( stock.c ),
-                });
+var emitsymbols = [];
+ 
+function getDataPro(input){
+    return (new Promise((resolve, reject) => {
+            googleStocks(input, function(err, data){
+                if (err) {
+                    console.log(err);
+                    reject(err);
+                } else {
+                    stocks = [];
+                    data.forEach(function(stock){
+                        stocks.push({
+                            symbol: stock.e + ":" + stock.t,
+                            open : parseFloat( stock.l ),
+                            last : parseFloat( stock.l ),
+                            change : parseFloat( stock.c ),
+                        });
+                    })
+                    resolve("done");
+                }
             })
-            resolve("done");
-        }
-    })});
-    getDataPro.then(() => {
-        if(stocks[0] !== undefined){
-            var stock = stocks[0];
-            onChangeHandler(stock.symbol, 'stock', stocks);
+        }));
+}
 
+function simulateChange(socketid){
+
+    if(socketid === undefined) {
+        for (let s in symbols) {
+            if (symbols.hasOwnProperty(s)) {
+                emitsymbols = symbols[s];
+               
+                getDataPro(emitsymbols).then(() => {
+                    onChangeHandler(s, 'stock', stocks);
+                }).catch((error) => {
+                    console.log(error,'Promise error');
+                });
+            }
         }
-    })
+    }else{
+        emitsymbols = symbols[socketid];
+               getDataPro(emitsymbols).then(() => {
+                    onChangeHandler(socketid, 'stock', stocks);
+                }).catch((error) => {
+                    console.log(error,'Promise error');
+                });
+    }
+
 }
 
 
 
-function init(onChange, initsymbols){
+function init(onChange, socketid, initsymbols){
     onChangeHandler = onChange;
-    if (typeof(initsymbols) === 'string') {
-        if(symbols.indexOf(initsymbols) === -1 ){
-            symbols.push(initsymbols);
-        }
-    } else {
-        initsymbols.forEach(function(data){
-            if(symbols.indexOf(data) === -1 ){
-                symbols.push(data);
+    if(symbols[socketid] === undefined){
+        symbols[socketid] = initsymbols;
+    }else{
+        initsymbols.forEach((data) => {
+            if(symbols[socketid].indexOf(data) === -1 ){
+                symbols[socketid].push(data);
             }
         })
     }
-
-    simulateChange();
+    simulateChange(socketid);
 }
 
 function start(onChange){
@@ -118,11 +132,18 @@ function addSymbols(newSymbols){
 
 }
 
-function delSymbol(delSymbol){
-    let i = symbols.indexOf(delSymbol);
-    if( i !== -1 ){
-        symbols.splice(i, 1);
+function delSymbol(socketid, leavesymbol){
+
+  if(symbols[socketid] !== undefined){
+      if(leavesymbol === "delAll"){
+          delete symbols[socketid];
+      }else{
+        let i = symbols[socketid].indexOf(leavesymbol);
+        symbols[socketid].splice(i, 1);
+      }
+
     }
+
 }
 
 exports.start = start;

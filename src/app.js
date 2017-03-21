@@ -71,13 +71,6 @@ class HomePage extends Component {
     watchStock(symbols){
         symbols = symbols.replace(/ /g,'');
         var arr = symbols.split(",");
-
-        fetch("http://" + document.domain + '/addSymbols',{
-           method: "POST",
-           headers:{'Content-Type':'application/x-www-form-urlencoded'},
-           body: "addSymbols=" + arr
-       });
-
         feedsocket.feed.watch(arr);
     }
 
@@ -90,11 +83,6 @@ class HomePage extends Component {
             }
         }
         this.setState({stocks: stocks});
-         fetch("http://" + document.domain + '/delSymbol',{
-           method: "POST",
-           headers:{'Content-Type':'application/x-www-form-urlencoded'},
-           body: "delSymbol=" + symbol
-       });
     }
     
     handleChangeHisStock(hs){
