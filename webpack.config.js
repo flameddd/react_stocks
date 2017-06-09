@@ -1,8 +1,9 @@
 
 var webpack = require('webpack');
+var Compression = require('compression-webpack-plugin');
 
 module.exports = {
-	devtool: 'eval-sourve-map',
+	//devtool: 'eval-sourve-map', //正式環境要考慮用不用  用了檔案會大很多
 	entry: __dirname + '/src/app.js',
 	output:{
 		path: __dirname + '/build/',
@@ -50,7 +51,29 @@ module.exports = {
 	plugins:[
 		
 		new webpack.HotModuleReplacementPlugin(),
+		new webpack.DefinePlugin({
+			'process.env':{
+				'NODE_ENV':JSON.stringify('production')
+			}
+		}),
+		new webpack.optimize.UglifyJsPlugin({
+			comments: false,
+			compress: {
+				warnings: false
+			}
+		}),
+		new webpack.optimize.AggressiveMergingPlugin(),
+		new Compression({
+			asset:'[path].gz[query]',
+			algorithm:'gzip',
+			test:new RegExp(
+				'\\.(js|css)$'
+			),
+			threshold: 10240,
+			minRatio: 0.8
+		})
 	],
+
 	 
 
 };

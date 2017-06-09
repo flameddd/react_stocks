@@ -63,3 +63,9 @@ exports.getHistoryStock = function(req , res , next){
             });
     }
 }
+
+exports.responsegz = function(req , res , next){
+    req.url = req.url + '.gz';
+    res.set('Content-Encoding','gzip');
+    next();
+};

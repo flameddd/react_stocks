@@ -5,7 +5,8 @@ var express = require('express'),
     http = require('http').Server(app),
     io = require('socket.io')(http),
     googleStocks = require('google-stocks'),
-    fs = require('fs');
+    fs = require('fs'),
+    compression = require('compression');
 var routes = require('./router');
 var feed  = require('./feed');
 var favicon = require('serve-favicon');
@@ -14,6 +15,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 //app.use(favicon(__dirname + '/public/images/favicon.ico'));
+app.use(compression()); //deal with boundle.gzip
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -23,7 +25,8 @@ app.use(express.static(path.join(__dirname, './public')));
 
 var conTable = new Object;
 
-app.post('/getHisData', routes.getHistoryStock)
+app.post('/getHisData', routes.getHistoryStock);
+app.get('*.js', routes.responsegz);
 
 io.on('connection' , function(socket) {
     console.log("一位使用者已連接. Socket id = &s" , socket.id);
